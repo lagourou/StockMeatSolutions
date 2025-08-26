@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{/images/logo-favicon.ico}"
+    />
+    <link rel="stylesheet" th:href="@{/css/products.css}" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-section">
+        <h2 class="app-title">StockMeat Solutions</h2>
+      </div>
+      <nav class="nav-links">
+        <a
+          th:href="@{/profil}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Profil</a
+        >
+        <a
+          th:href="@{/products}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item active"
+          >Produit</a
+        >
+        <a
+          th:href="@{/scans}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Scanner</a
+        >
+        <a
+          th:href="@{/payment}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Paiement</a
+        >
+        <a
+          th:href="@{/logout}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Se déconnecter</a
+        >
+      </nav>
+    </div>
+    <div class="main-content">
+      <div class="page-header">
+        <img
+          th:src="@{/images/logo-stock.png}"
+          alt="Logo StockMeat"
+          class="logo-inline"
+        />
+        <h3 class="page-title">Produit</h3>
+      </div>
+
+      <div class="container-total">
+        <div class="stock-total">
+          <div class="total-line">
+            <h5>Stock total :</h5>
+            <p th:text="${stockTotal} + ' Paquets disponibles'"></p>
+          </div>
+        </div>
+        <div class="scan-total">
+          <div class="total-line">
+            <h5>Scan total :</h5>
+            <p th:text="${scanTotal} + ' Produit(s) scanné(s)'"></p>
+          </div>
+        </div>
+      </div>
+
+      <h5 class="section-title">Stock actuel</h5>
+      <table class="stock-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Catégorie</th>
+            <th>Poids</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="product : ${products}">
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.category}"></td>
+            <td th:text="${product.weight} + 'g'"></td>
+            <td th:text="${product.price} + '€'"></td>
+            <td th:text="${product.quantity}"></td>
+            <td
+              th:utext="${product.status == 'Rupture de stock' ? '🚫 Rupture de stock' : product.status}"
+              th:class="${product.status == 'Stock disponible' ? 'status-ok'
+              : product.status == 'Stock moyen' ? 'status-mid'
+              : product.status == 'Stock faible' ? 'status-low'
+              : product.status == 'Rupture de stock' ? 'status-empty'
+              : 'status-unknown'}"
+            ></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

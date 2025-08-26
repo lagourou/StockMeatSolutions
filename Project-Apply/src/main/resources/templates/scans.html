@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page de Scanner</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{/images/logo-favicon.ico}"
+    />
+    <link rel="stylesheet" th:href="@{/css/scans.css}" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-section">
+        <h2 class="app-title">StockMeat Solutions</h2>
+      </div>
+      <nav class="nav-links">
+        <a
+          th:href="@{/profil}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Profil</a
+        >
+        <a
+          th:href="@{/products}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Produit</a
+        >
+        <a
+          th:href="@{/scans}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item active"
+          >Scanner</a
+        >
+        <a
+          th:href="@{/payment}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Paiement</a
+        >
+        <a
+          th:href="@{/logout}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Se déconnecter</a
+        >
+      </nav>
+    </div>
+
+    <div class="main-content">
+      <div class="page-header">
+        <img
+          th:src="@{/images/logo-stock.png}"
+          alt="Logo StockMeat"
+          class="logo-inline"
+        />
+        <h2 class="page-title">Scanner de codes-barres</h2>
+      </div>
+
+      <div class="scan-wrapper">
+        <form id="scanForm" th:action="@{/scans/save}" method="post">
+          <div class="scan-form">
+            <div class="scan-container">
+              <img
+                th:src="@{/images/icons8-scan-48.png}"
+                alt="Logo Scan"
+                class="logo-scan"
+              />
+              <h3>Scannez</h3>
+            </div>
+            <label for="barcode" class="barcode-label">Code-barres</label>
+            <input
+              type="text"
+              id="barcode"
+              name="barcode"
+              class="input-barcode"
+              placeholder="Scannez ou saisissez le code de barre"
+              autofocus
+              required
+            />
+            <div class="button-group">
+              <button type="submit" class="btn-scan">Scanner</button>
+              <button type="reset" class="btn-reset">Reset</button>
+            </div>
+            <div
+              id="confirmationMessage"
+              class="confirmation-message"
+              th:if="${successMessage != null}"
+            >
+              <p th:text="${successMessage}">Produit scanné avec succès !</p>
+            </div>
+          </div>
+        </form>
+
+        <div class="scanned-article">
+          <div class="scan-article">
+            <img
+              th:src="@{/images/icons8-boîte-64.png}"
+              alt="Logo Scan"
+              class="logo-scan"
+            />
+            <h3>Article(s) scanné(s)</h3>
+          </div>
+          <div th:if="${product != null}" class="article">
+            <p>
+              <strong>Nom :</strong> <span th:text="${product.name}"></span>
+            </p>
+            <p>
+              <strong>Catégorie :</strong>
+              <span th:text="${product.category}"></span>
+            </p>
+            <p>
+              <strong>Poids :</strong>
+              <span th:text="|${product.weight}g|"></span>
+            </p>
+            <p>
+              <strong>Prix :</strong>
+              <span th:text="|${product.price} €|"></span>
+            </p>
+          </div>
+          <div
+            th:if="${product == null and successMessage == null}"
+            class="alert-product"
+          >
+            <p>Aucun article scanné !</p>
+          </div>
+        </div>
+
+        <div
+          class="basket-section-wrapper"
+          th:if="${scannedProducts != null and !scannedProducts.isEmpty()}"
+        >
+          <div class="basket-section">
+            <h3>
+              Produit(s) dans le panier
+              <span th:text="${scannedProducts.size()}"></span>
+            </h3>
+            <ul>
+              <li th:each="p : ${scannedProducts}">
+                <span th:text="|${p.name} - ${p.price} €|"></span>
+              </li>
+            </ul>
+            <p>
+              <strong>Total :</strong>
+              <span
+                th:text="${#numbers.formatDecimal(totalAmount, 0, 'POINT', 2, 'COMMA')} + ' €'"
+              ></span>
+            </p>
+          </div>
+          <div class="btn-payment-group">
+            <form th:action="@{/payment}" method="get">
+              <button
+                type="submit"
+                class="btn-payment"
+                aria-label="Passer au paiement"
+              >
+                Passer au paiement
+              </button>
+            </form>
+            <form th:action="@{/scans/reset}" method="post">
+              <button
+                type="submit"
+                class="btn-reset-basket"
+                aria-label="Vider le panier"
+              >
+                Vider le panier
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const input = document.getElementById("barcode");
+      const scanForm = document.getElementById("scanForm");
+
+      let lastInputTime = Date.now();
+
+      input.addEventListener("input", function () {
+        const now = Date.now();
+        const delta = now - lastInputTime;
+        lastInputTime = now;
+
+        if (delta < 50 && input.value.length >= 8) {
+          scanForm.submit();
+        }
+      });
+
+      input.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          scanForm.submit();
+        }
+      });
+    </script>
+  </body>
+</html>

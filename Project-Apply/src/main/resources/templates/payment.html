@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page de paiement</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{/images/logo-favicon.ico}"
+    />
+    <link rel="stylesheet" th:href="@{/css/payment.css}" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-section">
+        <h2 class="app-title">StockMeat Solutions</h2>
+      </div>
+      <nav class="nav-links">
+        <a
+          th:href="@{/profil}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Profil</a
+        >
+        <a
+          th:href="@{/products}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Produit</a
+        >
+        <a
+          th:href="@{/scans}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Scanner</a
+        >
+        <a
+          th:href="@{/payment}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item active"
+          >Paiement</a
+        >
+        <a
+          th:href="@{/logout}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Se déconnecter</a
+        >
+      </nav>
+    </div>
+
+    <div class="main-content">
+      <div class="page-header">
+        <img
+          th:src="@{/images/logo-stock.png}"
+          alt="Logo StockMeat"
+          class="logo-inline"
+        />
+        <h2 class="page-title">Paiement</h2>
+      </div>
+
+      <div
+        th:if="${message}"
+        class="alert"
+        th:classappend="${message.contains('succès') ? ' alert-success' : ' alert-error'}"
+      >
+        <p th:text="${message}"></p>
+      </div>
+
+      <div class="payment-wrapper">
+        <h2>Récapitulatif</h2>
+        <ul class="product-list">
+          <li
+            th:each="p : ${products}"
+            th:text="|${p.name} - ${p.price} €|"
+          ></li>
+        </ul>
+        <div th:if="${products == null or products.isEmpty()}">
+          <p>Aucun produit dans le panier pour le moment.</p>
+        </div>
+
+        <p class="total">
+          <strong>Total :</strong>
+          <span th:text="|${totalAmount} €|"></span>
+        </p>
+
+        <form
+          th:action="@{/payment/confirm}"
+          method="post"
+          class="payment-form"
+        >
+          <label for="type">Mode de paiement</label>
+          <select name="type" id="type">
+            <option value="CARD">Carte</option>
+            <option value="CASH">Espèces</option>
+          </select>
+
+          <button
+            type="submit"
+            th:disabled="${products == null or products.isEmpty()}"
+          >
+            Valider et recevoir la facture
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

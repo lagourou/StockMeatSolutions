@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-ProjectApplyApplication<Project-Apply>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.projetApply.Project_Apply.ProjectApplyApplication",
+      "projectName": "Project-Apply",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

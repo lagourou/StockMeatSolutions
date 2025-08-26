@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page d'inscription</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{/images/logo-favicon.ico}"
+    />
+    <link rel="stylesheet" th:href="@{/css/loginregister.css}" />
+  </head>
+  <body>
+    <div class="cadre-register">
+      <div class="header">
+        <button class="btn-register">
+          <strong>StockMeat Solutions</strong>
+        </button>
+      </div>
+      <div class="container">
+        <form
+          th:action="@{/register}"
+          th:object="${user}"
+          method="post"
+          class="register-form"
+        >
+          <div
+            style="
+              position: relative;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+            "
+          >
+            <div th:if="${#fields.hasErrors('username')}" class="alert-danger">
+              <p
+                th:each="err : ${#fields.errors('username')}"
+                th:text="${err}"
+                class="error-message"
+              ></p>
+            </div>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              th:field="*{username}"
+              placeholder="Username"
+              class="styled-input"
+              th:value="${''}"
+              required
+            />
+          </div>
+          <div th:if="${error}" class="alert-danger">
+            <p th:text="${error}"></p>
+          </div>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            th:field="*{email}"
+            placeholder="Mail"
+            class="styled-input"
+            autocomplete="off"
+            th:value="${''}"
+            required
+          />
+          <input
+            id="password"
+            type="password"
+            name="password"
+            th:field="*{password}"
+            placeholder="Mot de passe"
+            class="styled-input"
+            autocomplete="new-password"
+            required
+          />
+          <button type="submit" class="submit-register">
+            <strong>S'inscrire</strong>
+          </button>
+        </form>
+        <div th:if="${success}" class="alert-success">
+          <p th:text="${success}"></p>
+        </div>
+        <footer class="form-footer">
+          <a href="/login" class="link">Déjà inscrit ? Connectez-vous</a>
+        </footer>
+        <div class="alert-container">
+          <p
+            th:if="${param.error}"
+            th:text="${param.error}"
+            class="alert-error"
+          ></p>
+          <p
+            th:if="${param.success}"
+            th:text="${param.success}"
+            class="alert-success"
+          ></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

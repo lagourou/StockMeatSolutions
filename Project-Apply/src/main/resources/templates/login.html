@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page de connexion</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{/images/logo-favicon.ico}"
+    />
+    <link rel="stylesheet" th:href="@{/css/loginregister.css}" />
+  </head>
+  <body>
+    <div class="cadre-login">
+      <div class="header">
+        <button class="btn-pmb"><strong>StockMeat Solutions</strong></button>
+      </div>
+      <form style="display: none">
+        <input type="text" name="fakeuser" autocomplete="username" />
+        <input type="password" name="fakepass" autocomplete="new-password" />
+      </form>
+
+      <form th:action="@{/login}" method="post" class="login-form">
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="Mail"
+          class="styled-input"
+          required
+        />
+        <input
+          id="password"
+          type="password"
+          name="password"
+          autocomplete="new-password"
+          placeholder="Mot de passe"
+          class="styled-input"
+          required
+        />
+        <button type="submit" class="submit-login">
+          <strong>Se connecter</strong>
+        </button>
+      </form>
+      <footer class="form-footer">
+        <a href="/register" class="link">Créer un compte </a>
+        &nbsp;
+        <p><strong>/</strong></p>
+        <a href="/forget-password" class="link">Mot de passe oublié ?</a>
+      </footer>
+      <div class="alert-container">
+        <p th:if="${param.error}" class="alert-error">
+          <i> Identifiant/mot de passe incorrect </i>
+        </p>
+        <p th:if="${param.resetSuccess}" class="success-message">
+          Mot de passe réinitialisé avec succès ! Vous pouvez vous connecter.
+        </p>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+      };
+    </script>
+  </body>
+</html>

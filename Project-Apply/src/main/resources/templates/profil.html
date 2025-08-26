@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page de profil</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      th:href="@{/images/logo-favicon.ico}"
+    />
+    <link rel="stylesheet" th:href="@{/css/profil.css}" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-section">
+        <h2 class="app-title">StockMeat Solutions</h2>
+      </div>
+      <nav class="nav-links">
+        <a
+          th:href="@{/profil}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item active"
+          >Profil</a
+        >
+        <a
+          th:href="@{/products}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Produit</a
+        >
+        <a
+          th:href="@{/scans}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Scanner</a
+        >
+        <a
+          th:href="@{/payment}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Paiement</a
+        >
+        <a
+          th:href="@{/logout}"
+          sec:authorize="isAuthenticated()"
+          class="nav-item"
+          >Se déconnecter</a
+        >
+      </nav>
+    </div>
+    <div class="main-content">
+      <div class="page-header">
+        <img
+          th:src="@{/images/logo-stock.png}"
+          alt="Logo StockMeat"
+          class="logo-inline"
+        />
+        <h1 class="page-title">Profil</h1>
+      </div>
+      <form
+        th:action="@{/modify-profil}"
+        th:object="${user}"
+        method="post"
+        class="form-modify"
+      >
+        <div class="form-username">
+          <div class="form-group">
+            <label for="username">Username :</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="input-username"
+              th:field="*{username}"
+              placeholder="@username"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Mail :</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              th:field="*{email}"
+              placeholder="nom@domain.com"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Mot de passe :</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            th:field="*{password}"
+            placeholder="mot de passe"
+            required
+          />
+        </div>
+        <button type="submit" class="btn-modify">Modifier</button>
+      </form>
+    </div>
+    <div class="alert-container">
+      <p th:if="${error}" th:text="${error}" class="alert-error"></p>
+      <p th:if="${success}" th:text="${success}" class="alert-success"></p>
+    </div>
+  </body>
+</html>
