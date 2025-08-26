@@ -1,41 +1,60 @@
+# Fichiers d'aide
 HELP.md
+
+# Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
 
-### STS ###
-.apt_generated
+# Build Gradle
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Spring Tool Suite / Eclipse
+.apt_generated/
 .classpath
 .factorypath
 .project
-.settings
-.springBeans
-.sts4-cache
-.log
-.pub
+.settings/
+.springBeans/
+.sts4-cache/
 
-### IntelliJ IDEA ###
-.idea
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# VS Code
 .vscode/
 
-# Target
-**/target/
+# Logs & erreurs JVM
+*.log
+hs_err_pid*
+replay_pid*
 
-# Documents
-**/Documents/
+# Clés et fichiers sensibles
+*.pub
+
+# Dossiers personnels à exclure
+Documents/
+
+# Caches et fichiers temporaires
+*.tmp
+*.swp
+*.bak
+*.old
+*.orig
