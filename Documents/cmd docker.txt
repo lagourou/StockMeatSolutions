@@ -1,0 +1,25 @@
+docker compose down -v --remove-orphans
+docker rmi patient-service note-service diabetes-assessment-service gateway-service
+docker compose up --build
+
+docker compose down : arrêter
+docker compose up : reprendre
+
+Entrer dans le container Mysql:
+docker exec -it medilabo-mysql-1 mysql -uroot -prootroot
+
+Entrer dans le contaiber MongDB:
+docker exec -it medilabo-mongo-1 mongosh -u root -p rootroot --authenticationDatabase admin
+
+mvn clean package -DskipTests
+
+
+docker-compose build gateway-service
+docker-compose up -d diabetes-assessment-service
+
+Lance Angular avec :
+ng serve --proxy-config proxy.conf.json
+
+docker-compose up -d mongo
+cd /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Open\ Classroom/P9/medilabo
+
