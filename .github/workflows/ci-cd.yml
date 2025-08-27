@@ -32,7 +32,7 @@ jobs:
 
       - name: Build project without tests
         run: mvn clean package -DskipTests
-        working-directory: ./Project-Apply
+        working-directory: ./Project-Apply/Project-Apply
 
       - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.7
