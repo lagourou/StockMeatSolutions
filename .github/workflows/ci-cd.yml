@@ -61,3 +61,5 @@ jobs:
             docker-compose up --build -d
             docker image prune -f
             docker ps
+      - name: Show workspace structure
+        run: ls -R
