@@ -32,7 +32,7 @@ jobs:
 
       - name: Build project without tests
         run: mvn clean package -DskipTests
-        working-directory: ./Project-Apply/Project-Apply
+        working-directory: ./Project-Apply
 
       - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.7
@@ -41,9 +41,9 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: |
-            target/*.jar
-            docker-compose.yml
-            Dockerfile
+            Project-Apply/target/*.jar
+            Project-Apply/docker-compose.yml
+            Project-Apply/Dockerfile
 
           target: /opt/stockmeatsolutions
           strip_components: 0
