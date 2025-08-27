@@ -49,7 +49,9 @@ jobs:
             Project-Apply/Dockerfile
 
           target: /opt/stockmeatsolutions
-          strip_components: 0
+          tar: false
+          rm: true
+          overwrite: true
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.2.0
