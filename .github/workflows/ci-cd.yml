@@ -34,6 +34,9 @@ jobs:
         run: mvn clean package -DskipTests
         working-directory: ./Project-Apply
 
+      - name: Show workspace structure
+        run: ls -R
+
       - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -61,5 +64,3 @@ jobs:
             docker-compose up --build -d
             docker image prune -f
             docker ps
-      - name: Show workspace structure
-        run: ls -R
