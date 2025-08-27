@@ -34,26 +34,17 @@ jobs:
         run: mvn clean package -DskipTests
         working-directory: ./Project-Apply
 
-      - name: Show workspace structure
-        run: ls -R
-
-      - name: Vérifier les fichiers à copier
+      - name: Copy files via SCP (manuel)
         run: |
-          ls -l Project-Apply/target/*.jar || echo "JAR introuvable"
-          ls Project-Apply/docker-compose.yml || echo "docker-compose.yml introuvable"
-          ls Project-Apply/Dockerfile || echo "Dockerfile introuvable"
-
-      - name: Copy files via SSH
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "Project-Apply/target/*.jar Project-Apply/docker-compose.yml Project-Apply/Dockerfile"
-          target: /opt/stockmeatsolutions
-          rm: true
-          overwrite: true
-          strip_components: 0
+          echo "$SSH_PRIVATE_KEY" > key.pem
+          chmod 600 key.pem
+          scp -i key.pem -o StrictHostKeyChecking=no \
+          Project-Apply/target/*.jar \
+          Project-Apply/docker-compose.yml \
+          Project-Apply/Dockerfile \
+          ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}:/opt/stockmeatsolutions
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.2.0
