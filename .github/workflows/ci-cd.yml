@@ -34,15 +34,20 @@ jobs:
         run: mvn clean package -DskipTests
         working-directory: ./Project-Apply
 
+      - name: Debug files before SCP
+        run: |
+          ls -lh Project-Apply/target/
+          ls -lh Project-Apply/
+
       - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "target/*.jar, docker-compose.yml, Dockerfile"
+          source: "Project-Apply/target/*.jar, Project-Apply/docker-compose.yml, Project-Apply/Dockerfile"
           target: /opt/stockmeatsolutions
-          strip_component: 0
+          strip_components: 0
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.2.0
