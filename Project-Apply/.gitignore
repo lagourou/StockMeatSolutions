@@ -59,4 +59,4 @@ Documents/
 *.old
 *.orig
 .env
-src/main/resources/keystore.p12
+
