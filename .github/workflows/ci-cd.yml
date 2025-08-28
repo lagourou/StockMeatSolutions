@@ -56,9 +56,11 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            docker --version
+            docker compose version
             cd /opt/stockmeatsolutions
-            docker-compose down || true
-            docker-compose pull
-            docker-compose up --build -d
+            docker compose down || true
+            docker compose pull
+            docker compose up --build -d
             docker image prune -f
             docker ps
