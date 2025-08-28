@@ -58,7 +58,7 @@ jobs:
           script: |
             docker --version
             docker compose version
-            cd /opt/stockmeatsolutions
+            cd /opt/stockmeatsolutions/Project-Apply
             docker compose down || true
             docker compose pull
             docker compose up --build -d
