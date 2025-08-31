@@ -1,0 +1,34 @@
+scp C:\Users\AGOUROU GUSTAVE\Downloads\Project-Apply\Project-Apply\.env stockmeatsolutions@180.149.196.233:/opt/stockmeatsolutions/Project-Apply/
+mysqldump -u root -p project_apply > project_apply.sql
+
+
+Si tu as une copie locale de ta base (dump SQL)
+
+Depuis ta machine locale (où tu avais les tables), fais un dump de la base :
+
+mysqldump -u root -p project_apply > project_apply.sql
+
+
+Copie ce fichier sur ton VPS et restaure dans le conteneur MySQL :
+
+docker cp project_apply.sql project-apply-mysqldb-1:/project_apply.sql
+docker exec -it project-apply-mysqldb-1 bash
+mysql -uroot -prootroot project_apply < /project_apply.sql
+
+Ensuite, tes tables seront présentes, et spring.jpa.hibernate.ddl-auto=validate fonctionnera à nouveau.
+
+
+ssh -i /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Project-Apply/github-deploy-key stockmeatsolutions@180.149.196.233
+
+
+cd /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Project-Apply/Project-Apply/github-deploy-key
+
+cd /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Project-Apply
+
+cd /opt/stockmeatsolutions/Project-Apply/Project-Apply/src/main/resources
+
+C:\Users\AGOUROU GUSTAVE\Downloads\Project-Apply\Project-Apply\src\main\resources\keystore.p12 il est la 
+
+ssh stockmeatsolutions@180.149.196.233
+cd /opt/stockmeatsolutions/Project-Apply
+docker compose up -d --build
