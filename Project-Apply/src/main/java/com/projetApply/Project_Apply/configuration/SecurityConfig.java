@@ -50,9 +50,8 @@ public class SecurityConfig {
                                                 .requestMatchers("/", "/login", "/register", "/forget-password",
                                                                 "/reset-password")
                                                 .permitAll()
-                                                .requestMatchers("/css/**", "/js/**", "/images/**")
-                                                .permitAll()
-
+                                                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                                                .requestMatchers("/api/status").permitAll()
                                                 // Pages nécessitant une authentification
                                                 .requestMatchers(
                                                                 "/profil", "/modify-profil",
