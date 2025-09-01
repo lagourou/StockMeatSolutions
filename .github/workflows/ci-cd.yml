@@ -64,3 +64,4 @@ jobs:
             docker compose up --build -d
             docker image prune -f
             docker ps
+            curl -f http://localhost:8080/api/status || exit 1
