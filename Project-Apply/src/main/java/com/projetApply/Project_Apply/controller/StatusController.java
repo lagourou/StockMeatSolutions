@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Profile("dev")
@@ -23,6 +24,11 @@ public class StatusController {
                 "environment",
                 "dev",
                 "message", "Application is running");
+    }
+
+    @PostConstruct
+    public void init() {
+        log.info("StatusController chargé avec le profil DEV");
     }
 
 }
