@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StatusController {
 
-    @GetMapping
+    @GetMapping("/status")
     public Map<String, String> status() {
         log.info("Endpoint appelé /api/status appelé");
         return Map.of(
