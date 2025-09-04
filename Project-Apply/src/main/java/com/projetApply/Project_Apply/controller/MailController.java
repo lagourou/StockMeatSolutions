@@ -59,7 +59,7 @@ public class MailController {
         user.setTokenExpiration(expiration);
         userRepository.save(user);
 
-        String resetLink = "http://localhost:8080/reset-password?token=" + token;
+        String resetLink = "https://www.stockmeatsolutions.site/reset-password?token=" + token;
         String subject = "Réinitialisation de votre mot de passe";
         String body = "<p>Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe (valide 24h) :</p>"
                 + "<p><a href=\"" + resetLink + "\">Réinitialiser le mot de passe</a></p>";
