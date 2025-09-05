@@ -21,6 +21,8 @@ public class MailServiceImplements implements MailService {
     public void sendMail(String to, String from, String subject, String body) {
 
         log.info("Préparation du mail : to={}, from={}, subject={}", to, from, subject);
+
+        log.info("Mot de passe SMTP injecté : {}", System.getenv("SPRING_MAIL_PASSWORD"));
         MimeMessage message = mailSender.createMimeMessage();
 
         try {

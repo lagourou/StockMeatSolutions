@@ -80,6 +80,7 @@ public class MailController {
         log.info("Contenu HTML : {}", body);
 
         try {
+            log.info("Appel imminent de mailService.sendMail(...)");
             mailService.sendMail(email, "noreply@stockmeatsolutions.site", subject, body);
             model.addAttribute("message", "Mail envoyé avec succès !");
             log.info("Mail envoyé avec succès à : {}", email);
