@@ -16,9 +16,11 @@ import com.projetApply.Project_Apply.repository.UserRepository;
 import com.projetApply.Project_Apply.service.MailService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MailController {
 
     private final MailService mailService;
@@ -72,20 +74,29 @@ public class MailController {
                 + "<hr><p style='font-size: 12px;'>StockMeat Solutions • Ne pas répondre à ce mail</p>"
                 + "</div>";
 
+        log.info("Préparation de l'envoi du mail à : {}", email);
+        log.info("Expéditeur : noreply@stockmeatsolutions.site");
+        log.info("Sujet : {}", subject);
+        log.info("Contenu HTML : {}", body);
+
         try {
             mailService.sendMail(email, "noreply@stockmeatsolutions.site", subject, body);
             model.addAttribute("message", "Mail envoyé avec succès !");
+            log.info("Mail envoyé avec succès à : {}", email);
+
         } catch (Exception e) {
             model.addAttribute("message", "Échec de l'envoi du mail.");
+            log.error("Échec de l'envoi du mail à : {}", email, e);
+
         }
 
-        System.out.println("Lien envoyé" + resetLink);
+        log.info("Lien envoyé" + resetLink);
         return "forget-password";
     }
 
     @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
-        System.out.println("Token reçu" + token);
+        log.info("Token reçu" + token);
 
         Optional<User> optionalUser = userRepository.findByResetToken(token);
 

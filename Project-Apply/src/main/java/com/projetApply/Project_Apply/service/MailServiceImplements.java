@@ -8,15 +8,19 @@ import org.springframework.stereotype.Service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MailServiceImplements implements MailService {
 
     private final JavaMailSender mailSender;
 
     @Override
     public void sendMail(String to, String from, String subject, String body) {
+
+        log.info("Préparation du mail : to={}, from={}, subject={}", to, from, subject);
         MimeMessage message = mailSender.createMimeMessage();
 
         try {
@@ -25,10 +29,14 @@ public class MailServiceImplements implements MailService {
             helper.setFrom(from);
             helper.setSubject(subject);
             helper.setText(body, true);
+            log.info("Message MIME configuré avec succès");
 
+            log.info("Tentative d'envoi du mail via JavaMailSender...");
             mailSender.send(message);
+            log.info("Mail envoyé avec succès à {}", to);
         } catch (MessagingException e) {
 
+            log.error("Échec de l'envoi du mail à {}", to, e);
             throw new RuntimeException("Erreur lors de l'envoie du mail", e);
         }
 

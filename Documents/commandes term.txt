@@ -3,8 +3,6 @@ mysqldump -u root -p project_apply > project_apply.sql
 
 OpenPdf : envoie de pdf facture
 
-
-
 Si tu as une copie locale de ta base (dump SQL)
 
 Depuis ta machine locale (où tu avais les tables), fais un dump de la base :
@@ -19,7 +17,7 @@ docker exec -it project-apply-mysqldb-1 bash
 mysql -uroot -prootroot project_apply < /project_apply.sql
 
 Ensuite, tes tables seront présentes, et spring.jpa.hibernate.ddl-auto=validate fonctionnera à nouveau.
-
+C:\Users\AGOUROU GUSTAVE\Downloads\Project-Apply\Project-Apply\target
 
 ssh -i /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Project-Apply/github-deploy-key stockmeatsolutions@180.149.196.233
 
@@ -33,4 +31,11 @@ C:\Users\AGOUROU GUSTAVE\Downloads\Project-Apply\Project-Apply\src\main\resource
 ssh stockmeatsolutions@180.149.196.233
 cd /opt/stockmeatsolutions/Project-Apply
 docker compose up -d --build
-scp /chemin/vers/projet/target/stockmeatsolutions-0.0.1-SNAPSHOT.jar stockmeatsolutions@180.149.196.233:~/stockmeatsolutions.jar
+scp /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Project-Apply/Project-Apply/target/Project-Apply-0.0.1-SNAPSHOT.jar stockmeatsolutions@180.149.196.233:~/stockmeatsolutions.jar
+C:\Users\AGOUROU GUSTAVE\Downloads\Project-Apply\Project-Apply\src\main\resources\keystore.p12
+scp /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Project-Apply/Project-Apply/src/main/resources/keystore.p12 stockmeatsolutions@180.149.196.233:~/keystore.p12
+java -jar ~/stockmeatsolutions.jar 
+
+
+noreply@stockmeatsolutions.site
+UPDATE user SET reset_token = NULL, token_expiration = NULL WHERE email = 'agourou84@email.com';

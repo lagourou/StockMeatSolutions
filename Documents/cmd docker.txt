@@ -23,6 +23,4 @@ ng serve --proxy-config proxy.conf.json
 docker-compose up -d mongo
 cd /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Open\ Classroom/P9/medilabo
 cd /mnt/c/Users/AGOUROU\ GUSTAVE/Downloads/Project-Apply/Project-Apply
-C:\Users\AGOUROU GUSTAVE\Downloads\
-
-\\wsl.localhost\Ubuntu\home\agourou84\.ssh
+C:\Users\AGOUROU GUSTAVE\Downloads\ 
