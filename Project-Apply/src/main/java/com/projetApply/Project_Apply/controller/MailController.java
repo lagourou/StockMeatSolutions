@@ -61,11 +61,19 @@ public class MailController {
 
         String resetLink = "https://www.stockmeatsolutions.site/reset-password?token=" + token;
         String subject = "Réinitialisation de votre mot de passe";
-        String body = "<p>Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe (valide 24h) :</p>"
-                + "<p><a href=\"" + resetLink + "\">Réinitialiser le mot de passe</a></p>";
+        String body = "<div style='font-family: Arial, sans-serif; color: #333;'>"
+                + "<div style='text-align: center;'><img src='https://www.stockmeatsolutions.site/images/logo-stock.png' alt='Logo StockMeat' style='width: 120px; height: auto; margin-bottom: 20px;' />"
+                + "<h2 style='color: #007bff;'>Réinitialisation de votre mot de passe</h2>"
+                + "<p>Bonjour " + user.getUsername() + ",</p>"
+                + "<p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous :</p>"
+                + "<p><a href='" + resetLink
+                + "' style='background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;'>Réinitialiser le mot de passe</a></p>"
+                + "<p style='font-size: 12px; color: #888;'>Ce lien est valable pendant 24 heures.</p>"
+                + "<hr><p style='font-size: 12px;'>StockMeat Solutions • Ne pas répondre à ce mail</p>"
+                + "</div>";
 
         try {
-            mailService.sendMail(email, "noreply@projetapply.com", subject, body);
+            mailService.sendMail(email, "noreply@stockmeatsolutions.site", subject, body);
             model.addAttribute("message", "Mail envoyé avec succès !");
         } catch (Exception e) {
             model.addAttribute("message", "Échec de l'envoi du mail.");
