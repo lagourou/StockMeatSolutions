@@ -23,8 +23,12 @@ import com.projetApply.Project_Apply.configuration.UserDetailsImplements;
 import com.projetApply.Project_Apply.model.Payment;
 import com.projetApply.Project_Apply.repository.PaymentRepository;
 import com.projetApply.Project_Apply.repository.UserRepository;
+import com.projetApply.Project_Apply.service.InvoiceService;
+import com.projetApply.Project_Apply.service.MailService;
 import com.projetApply.Project_Apply.model.PaymentType;
+import com.projetApply.Project_Apply.model.Scan;
 import com.projetApply.Project_Apply.model.User;
+import com.projetApply.Project_Apply.repository.ScanRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +40,9 @@ public class PaymentController {
 
         private final UserRepository userRepository;
         private final PaymentRepository paymentRepository;
+        private final ScanRepository scanRepository;
+        private final InvoiceService invoiceService;
+        private final MailService mailService;
 
         @GetMapping()
         public String showPaymentPage(@ModelAttribute("scannedProducts") List<ProductDTO> scannedProducts,
@@ -81,7 +88,37 @@ public class PaymentController {
 
                 Payment savePayment = paymentRepository.save(payment);
 
-                return "redirect:/send-invoice?paymentId=" + savePayment.getId();
-        }
+                List<Scan> scans = scanRepository.findByUser(employee);
 
+                for (Scan scan : scans) {
+                        String barcode = scan.getProduct().getBarcode();
+
+                        boolean match = scannedProducts.stream().anyMatch(dto -> dto.getBarcode().equals(barcode));
+
+                        if (match && scan.getPayment() == null) {
+                                scan.setPayment(savePayment);
+                                scanRepository.save(scan);
+                        }
+                }
+                byte[] pdf = invoiceService.generateInvoicePDF(savePayment);
+
+                String to = employee.getEmail();
+                String subject = "Votre facture";
+                String body = "Veuillez trouver ci-joint votre facture.";
+                String filename = "facture_" + savePayment.getId() + ".pdf";
+
+                try {
+                        mailService.sendMailWithAttachment(to, "noreply@stockmeatsolutions.site", subject, body, pdf,
+                                        filename);
+                        model.addAttribute("message", "Facture envoyée avec succès !");
+                } catch (Exception e) {
+                        model.addAttribute("message", "Échec de l'envoi de la facture.");
+                }
+
+                model.addAttribute("products", new ArrayList<>());
+                model.addAttribute("totalAmount", BigDecimal.ZERO);
+
+                return "payment";
+
+        }
 }

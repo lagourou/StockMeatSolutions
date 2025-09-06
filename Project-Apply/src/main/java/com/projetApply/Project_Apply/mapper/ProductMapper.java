@@ -11,7 +11,6 @@ import com.projetApply.Project_Apply.model.Product;
 public interface ProductMapper {
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
-    @Mapping(target = "barcode", ignore = true)
     @Mapping(target = "scans", ignore = true)
     Product toEntity(ProductDTO productDTO);
 

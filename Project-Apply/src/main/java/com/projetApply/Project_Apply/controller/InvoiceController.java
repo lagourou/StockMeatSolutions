@@ -44,7 +44,7 @@ public class InvoiceController {
         String filename = "facture_" + payment.getId() + ".pdf";
 
         try {
-            mailService.sendMailWithAttachment(to, "noreply@projetapply.com", subject, body, pdf, filename);
+            mailService.sendMailWithAttachment(to, "noreply@stockmeatsolutions.site", subject, body, pdf, filename);
             model.addAttribute("message", "Facture envoyée avec succès !");
         } catch (Exception e) {
             model.addAttribute("message", "Échec de l'envoi de la facture.");

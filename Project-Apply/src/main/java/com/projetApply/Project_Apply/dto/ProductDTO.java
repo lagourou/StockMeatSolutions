@@ -19,6 +19,8 @@ public class ProductDTO {
 
     private String name;
 
+    private String barcode;
+
     private int quantity;
 
     private int weight;

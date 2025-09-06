@@ -23,9 +23,12 @@ CREATE TABLE scan (
   user_id INT,
   product_id INT,
   date_scan TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  payment_id INT,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES user(id),
-  FOREIGN KEY (product_id) REFERENCES product(id)
+  FOREIGN KEY (product_id) REFERENCES product(id),
+  FOREIGN KEY (payment_id) REFERENCES payment(id)
+
 );
 CREATE TABLE payment (
   id INT NOT NULL AUTO_INCREMENT,

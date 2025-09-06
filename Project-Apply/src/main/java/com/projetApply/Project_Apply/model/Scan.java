@@ -25,4 +25,8 @@ public class Scan {
     @Column(name = "date_scan", nullable = false)
     private Timestamp dateScan;
 
+    @ManyToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
 }
