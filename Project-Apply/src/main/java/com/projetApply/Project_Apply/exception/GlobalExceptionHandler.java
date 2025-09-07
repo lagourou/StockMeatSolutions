@@ -14,12 +14,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public String handleProductNotFound(ProductNotFoundException ex, Model model) {
+        log.warn("Produit introuvable : {}", ex.getMessage());
         model.addAttribute("error", ex.getMessage());
         return "product/notfound";
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public String handleUserNotFound(UserNotFoundException ex, Model model) {
+        log.warn("Utilisateur introuvable : {}", ex.getMessage());
         model.addAttribute("error", ex.getMessage());
         return "user/notfound";
     }
@@ -33,12 +35,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public String handleTypeMismatch(MethodArgumentTypeMismatchException ex, Model model) {
+        log.error("Type de paramètre invalide : {}", ex.getValue(), ex);
         model.addAttribute("error", "Type de paramètre invalide : " + ex.getValue());
         return "error";
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handleValidationError(MethodArgumentNotValidException ex, Model model) {
+        log.error("Erreur de validation : {}", ex.getMessage(), ex);
         model.addAttribute("error", "Erreur de validation : " + ex.getMessage());
         return "error";
     }

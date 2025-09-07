@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.projetApply.Project_Apply.dto.ProductDTO;
 import com.projetApply.Project_Apply.dto.ScanDTO;
 import com.projetApply.Project_Apply.exception.ProductNotFoundException;
 import com.projetApply.Project_Apply.mapper.ScanMapper;
@@ -26,7 +25,6 @@ public class ScanService {
     private final ScanRepository scanRepository;
     private final ScanMapper scanMapper;
     private final UserRepository userRepository;
-    private final ProductService productService;
     private final ProductRepository productRepository;
 
     public Scan saveScan(int userId, String barcode) {
@@ -34,10 +32,8 @@ public class ScanService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
 
-        ProductDTO productDTO = productService.removeProduct(barcode);
-
         Product product = productRepository.findByBarcode(barcode)
-                .orElseThrow(() -> new ProductNotFoundException("Produit introuvable" + productDTO.getName()));
+                .orElseThrow(() -> new ProductNotFoundException("Produit introuvable"));
 
         Scan scan = new Scan();
         scan.setUser(user);
