@@ -98,7 +98,6 @@ public class ProductService {
             throw new IllegalStateException("Stock épuisé pour le Produit : " + product.getName());
         }
 
-        product.setQuantity(product.getQuantity() - 1);
         productRepository.save(product);
 
         return productMapper.toDTO(product);

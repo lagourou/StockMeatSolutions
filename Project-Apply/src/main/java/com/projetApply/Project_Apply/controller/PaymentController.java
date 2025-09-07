@@ -16,16 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.projetApply.Project_Apply.dto.ProductDTO;
+import com.projetApply.Project_Apply.exception.ProductNotFoundException;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.projetApply.Project_Apply.configuration.UserDetailsImplements;
 import com.projetApply.Project_Apply.model.Payment;
 import com.projetApply.Project_Apply.repository.PaymentRepository;
+import com.projetApply.Project_Apply.repository.ProductRepository;
 import com.projetApply.Project_Apply.repository.UserRepository;
 import com.projetApply.Project_Apply.service.InvoiceService;
 import com.projetApply.Project_Apply.service.MailService;
 import com.projetApply.Project_Apply.model.PaymentType;
+import com.projetApply.Project_Apply.model.Product;
 import com.projetApply.Project_Apply.model.Scan;
 import com.projetApply.Project_Apply.model.User;
 import com.projetApply.Project_Apply.repository.ScanRepository;
@@ -43,6 +46,7 @@ public class PaymentController {
         private final ScanRepository scanRepository;
         private final InvoiceService invoiceService;
         private final MailService mailService;
+        private final ProductRepository productRepository;
 
         @GetMapping()
         public String showPaymentPage(@ModelAttribute("scannedProducts") List<ProductDTO> scannedProducts,
@@ -65,8 +69,15 @@ public class PaymentController {
         }
 
         @PostMapping("/confirm")
-        public String confirmPayment(@RequestParam PaymentType paymentType,
+        public String confirmPayment(@RequestParam("paymentType") PaymentType paymentType,
                         @ModelAttribute("scannedProducts") List<ProductDTO> scannedProducts, Model model) {
+
+                if (scannedProducts == null || scannedProducts.isEmpty()) {
+                        model.addAttribute("message", "Aucun produit à payer.");
+                        model.addAttribute("products", new ArrayList<>());
+                        model.addAttribute("totalAmount", BigDecimal.ZERO);
+                        return "payment";
+                }
 
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 UserDetailsImplements userDetails = (UserDetailsImplements) authentication.getPrincipal();
@@ -87,6 +98,17 @@ public class PaymentController {
                 payment.setEmployee(employee);
 
                 Payment savePayment = paymentRepository.save(payment);
+
+                for (ProductDTO dto : scannedProducts) {
+                        Product product = productRepository.findByBarcode(dto.getBarcode())
+                                        .orElseThrow(() -> new ProductNotFoundException("Produit introuvable"));
+
+                        if (product.getQuantity() <= 0) {
+                                throw new IllegalStateException("Stock épuisé pour le produit : " + product.getName());
+                        }
+                        product.setQuantity(product.getQuantity() - 1);
+                        productRepository.save(product);
+                }
 
                 List<Scan> scans = scanRepository.findByUser(employee);
 
@@ -121,4 +143,10 @@ public class PaymentController {
                 return "payment";
 
         }
+
+        @ModelAttribute("scannedProducts")
+        public List<ProductDTO> scannedProducts() {
+                return new ArrayList<>();
+        }
+
 }

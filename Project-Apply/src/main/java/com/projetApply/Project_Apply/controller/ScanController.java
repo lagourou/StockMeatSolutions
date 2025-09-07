@@ -74,9 +74,10 @@ public class ScanController {
             model.addAttribute("errorMessage", "❌ Code-barres inconnu ou produit introuvable.");
         }
 
-        BigDecimal totalAmount = scannedProducts.stream()
-                .map(ProductDTO::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalAmount = scannedProducts.isEmpty() ? BigDecimal.ZERO
+                : scannedProducts.stream()
+                        .map(ProductDTO::getPrice)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         model.addAttribute("product", product);
         model.addAttribute("scannedProducts", scannedProducts);
