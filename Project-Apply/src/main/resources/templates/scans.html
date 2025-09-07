@@ -121,11 +121,17 @@
               <span th:text="|${product.price} €|"></span>
             </p>
           </div>
+          <div class="error-message" th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}"></p>
+          </div>
           <div
             th:if="${product == null and successMessage == null}"
             class="alert-product"
           >
             <p>Aucun article scanné !</p>
+          </div>
+          <div class="warning-message" th:if="${warningMessage != null}">
+            <p th:text="${warningMessage}"></p>
           </div>
         </div>
 
@@ -185,7 +191,7 @@
         const delta = now - lastInputTime;
         lastInputTime = now;
 
-        if (delta < 50 && input.value.length >= 8) {
+        if (delta < 50 && input.value.length == 13) {
           scanForm.submit();
         }
       });
@@ -193,7 +199,12 @@
       input.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
           e.preventDefault();
-          scanForm.submit();
+
+          if (input.value.length === 13) {
+            scanForm.submit();
+          } else {
+            alert("Le code-barres doit contenir exactement 13 chiffres.");
+          }
         }
       });
     </script>

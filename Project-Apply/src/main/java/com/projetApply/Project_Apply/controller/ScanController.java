@@ -65,6 +65,13 @@ public class ScanController {
         if (product != null) {
             scannedProducts.add(product);
             model.addAttribute("successMessage", "✔️ Produit scanné avec succès !");
+
+            if (product.getQuantity() <= 0) {
+                model.addAttribute("warningMessage", "⚠️ Ce produit est en rupture de stock.");
+            }
+
+        } else {
+            model.addAttribute("errorMessage", "❌ Code-barres inconnu ou produit introuvable.");
         }
 
         BigDecimal totalAmount = scannedProducts.stream()
