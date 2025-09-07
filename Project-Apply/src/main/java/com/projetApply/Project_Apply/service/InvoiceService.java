@@ -2,6 +2,7 @@ package com.projetApply.Project_Apply.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 
 import com.itextpdf.text.Document;
@@ -40,7 +42,9 @@ public class InvoiceService {
             PdfWriter.getInstance(document, baos);
             document.open();
 
-            Image logo = Image.getInstance("src/main/resources/images/logo-stock.png");
+            InputStream logoStream = getClass().getClassLoader().getResourceAsStream("images/logo-stock.png");
+            Image logo = Image.getInstance(IOUtils.toByteArray(logoStream));
+
             logo.scaleAbsolute(120, 60);
             document.add(logo);
 
