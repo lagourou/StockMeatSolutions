@@ -42,7 +42,10 @@ public class InvoiceService {
             PdfWriter.getInstance(document, baos);
             document.open();
 
-            InputStream logoStream = getClass().getClassLoader().getResourceAsStream("images/logo-stock.png");
+            InputStream logoStream = getClass().getClassLoader().getResourceAsStream("static/images/logo-stock.png");
+            if (logoStream == null) {
+                throw new RuntimeException("Logo introuvable dans static/images/logo-stock.png");
+            }
             Image logo = Image.getInstance(IOUtils.toByteArray(logoStream));
 
             logo.scaleAbsolute(120, 60);
