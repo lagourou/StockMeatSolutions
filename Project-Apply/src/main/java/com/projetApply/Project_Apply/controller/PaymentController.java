@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.projetApply.Project_Apply.configuration.UserDetailsImplements;
 import com.projetApply.Project_Apply.dto.ProductDTO;
@@ -52,7 +53,7 @@ public class PaymentController {
 
         @PostMapping("/confirm")
         public String confirmPayment(@ModelAttribute("scannedProducts") List<ProductDTO> scannedProducts,
-                        Model model, PaymentType paymentType) {
+                        Model model, PaymentType paymentType, SessionStatus status) {
                 try {
                         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
                         UserDetailsImplements userDetails = (UserDetailsImplements) auth.getPrincipal();
@@ -60,6 +61,8 @@ public class PaymentController {
                                         .orElseThrow(() -> new RuntimeException("Employé introuvable"));
 
                         paymentService.processPayment(employee, paymentType, scannedProducts);
+
+                        status.setComplete();
 
                         model.addAttribute("message", "Facture envoyée avec succès !");
                         model.addAttribute("products", new ArrayList<>());
