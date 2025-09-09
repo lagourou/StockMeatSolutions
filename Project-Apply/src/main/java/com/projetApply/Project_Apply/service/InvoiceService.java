@@ -48,7 +48,9 @@ public class InvoiceService {
             }
             Image logo = Image.getInstance(IOUtils.toByteArray(logoStream));
 
-            logo.scaleAbsolute(120, 60);
+            logo.scaleAbsolute(80, 40);
+            logo.setAlignment(Image.ALIGN_CENTER);
+            logo.setSpacingAfter(10f);
             document.add(logo);
 
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
