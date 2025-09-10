@@ -48,7 +48,7 @@ public class InvoiceService {
             }
             Image logo = Image.getInstance(IOUtils.toByteArray(logoStream));
 
-            logo.scaleToFit(100, 100);
+            logo.scaleToFit(60, 60);
             logo.setAlignment(Image.ALIGN_CENTER);
             logo.setSpacingAfter(10f);
             document.add(logo);
