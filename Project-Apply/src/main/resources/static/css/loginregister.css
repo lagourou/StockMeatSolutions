@@ -167,9 +167,12 @@ body {
 }
 .alert-danger {
   position: absolute;
-  top: -20px;
-  font-size: 12px;
+  font-size: 14px;
+  bottom: 80px;
   color: red;
+}
+.alert-danger p {
+  font-style: italic;
 }
 .register-form {
   position: relative;

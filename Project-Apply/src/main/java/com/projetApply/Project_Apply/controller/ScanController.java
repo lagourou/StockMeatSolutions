@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.projetApply.Project_Apply.configuration.UserDetailsImplements;
 import com.projetApply.Project_Apply.dto.ProductDTO;
 import com.projetApply.Project_Apply.dto.ScanDTO;
+import com.projetApply.Project_Apply.exception.ProductNotFoundException;
 import com.projetApply.Project_Apply.service.ScanService;
 
 import lombok.RequiredArgsConstructor;
@@ -59,19 +60,25 @@ public class ScanController {
         UserDetailsImplements userDetails = (UserDetailsImplements) authentication.getPrincipal();
         int userId = userDetails.getId();
 
-        ScanDTO scan = scanService.saveScanDTO(userId, barcode);
-        ProductDTO product = scan.getProduct();
+        ProductDTO product = null;
 
-        if (product != null) {
-            scannedProducts.add(product);
-            model.addAttribute("successMessage", "✔️ Produit scanné avec succès !");
+        try {
+            ScanDTO scan = scanService.saveScanDTO(userId, barcode);
+            product = scan.getProduct();
 
-            if (product.getQuantity() <= 0) {
-                model.addAttribute("warningMessage", "⚠️ Ce produit est en rupture de stock.");
+            if (product != null) {
+                if (product.getQuantity() <= 0) {
+                    model.addAttribute("warningMessage", "⚠️ Ce produit est en rupture de stock.");
+                } else {
+                    scannedProducts.add(product);
+                    model.addAttribute("successMessage", "✔️ Produit scanné avec succès !");
+                }
             }
 
-        } else {
+        } catch (ProductNotFoundException e) {
             model.addAttribute("errorMessage", "❌ Code-barres inconnu ou produit introuvable.");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "❌ Erreur inattendue : " + e.getMessage());
         }
 
         BigDecimal totalAmount = scannedProducts.isEmpty() ? BigDecimal.ZERO
@@ -84,7 +91,6 @@ public class ScanController {
         model.addAttribute("totalAmount", totalAmount);
 
         return "scans";
-
     }
 
     @ModelAttribute("scannedProducts")
