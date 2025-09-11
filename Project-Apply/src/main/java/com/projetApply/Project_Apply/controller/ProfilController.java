@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ProfilController {
+
     private final UserService userService;
     private final UserMapper userMapper;
 
@@ -49,7 +50,7 @@ public class ProfilController {
         }
         log.info("Modification du profil de l'utilisateur ID: {}", userDetails.getId());
         userService.updateUser(updatedUser, userDetails.getId());
-        redirectAttributes.addFlashAttribute("success", "Profil bien modifié");
+        redirectAttributes.addFlashAttribute("success", "✔️ Profil bien modifié");
 
         return "redirect:/profil";
     }
