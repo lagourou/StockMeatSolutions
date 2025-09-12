@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
 
+    private int id;
+
     @NotBlank(message = "Le nom d'utilisateur est requis")
     @Size(min = 8, max = 20, message = "Le nom d'utilisateur doit contenir entre 8 et 20 caractères")
     private String username;

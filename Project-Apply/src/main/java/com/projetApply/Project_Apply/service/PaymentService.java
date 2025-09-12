@@ -47,7 +47,6 @@ public class PaymentService {
         payment.setAmount(total);
         payment.setType(paymentType);
         payment.setPaymentDate(LocalDateTime.now());
-        payment.setStatus("EN_ATTENTE");
         payment.setEmployee(employee);
 
         Payment savedPayment = paymentRepository.save(payment);

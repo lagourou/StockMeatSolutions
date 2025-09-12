@@ -32,8 +32,6 @@ public class Payment {
     @Column(name = "payment_date")
     private LocalDateTime paymentDate;
 
-    private String status;
-
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private User employee;

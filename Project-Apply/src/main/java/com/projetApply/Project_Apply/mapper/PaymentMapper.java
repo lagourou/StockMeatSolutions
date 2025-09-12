@@ -12,7 +12,6 @@ public class PaymentMapper {
         dto.setAmount(payment.getAmount());
         dto.setType(payment.getType());
         dto.setPaymentDate(payment.getPaymentDate());
-        dto.setStatus(payment.getStatus());
         dto.setEmployeeId(payment.getEmployee().getId());
         return dto;
     }
@@ -23,7 +22,6 @@ public class PaymentMapper {
         payment.setAmount(dto.getAmount());
         payment.setType(dto.getType());
         payment.setPaymentDate(dto.getPaymentDate());
-        payment.setStatus(dto.getStatus());
         payment.setEmployee(employee);
         return payment;
     }
