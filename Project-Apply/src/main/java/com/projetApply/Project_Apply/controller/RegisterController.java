@@ -33,8 +33,8 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("user") UserDTO userDto, Model model,
-            BindingResult result) {
+    public String registerUser(@Valid @ModelAttribute("user") UserDTO userDto,
+            BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             log.warn("Erreur dans le formulaire d'inscription");
