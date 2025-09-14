@@ -47,4 +47,11 @@ public class GlobalExceptionHandler {
         return "error";
     }
 
+    @ExceptionHandler(MailSendingException.class)
+    public String handleMailSendingError(MailSendingException ex, Model model) {
+        log.error("Erreur lors de l'envoi d'un mail : {}", ex.getMessage(), ex);
+        model.addAttribute("error", "Impossible d'envoyer l'email : " + ex.getMessage());
+        return "forget-password";
+    }
+
 }

@@ -1,9 +1,12 @@
 package com.projetApply.Project_Apply.service;
 
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import com.projetApply.Project_Apply.exception.MailSendingException;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -19,10 +22,9 @@ public class MailServiceImplements implements MailService {
 
     @Override
     public void sendMail(String to, String from, String subject, String body) {
-
         log.info("Préparation du mail : to={}, from={}, subject={}", to, from, subject);
-
         log.info("Mot de passe SMTP injecté : {}", System.getenv("SPRING_MAIL_PASSWORD"));
+
         MimeMessage message = mailSender.createMimeMessage();
 
         try {
@@ -36,12 +38,12 @@ public class MailServiceImplements implements MailService {
             log.info("Tentative d'envoi du mail via JavaMailSender...");
             mailSender.send(message);
             log.info("Mail envoyé avec succès à {}", to);
-        } catch (MessagingException e) {
 
+        } catch (MessagingException | MailException e) {
             log.error("Échec de l'envoi du mail à {}", to, e);
-            throw new RuntimeException("Erreur lors de l'envoie du mail", e);
-        }
 
+            throw new MailSendingException("Impossible d'envoyer le mail", e);
+        }
     }
 
     @Override

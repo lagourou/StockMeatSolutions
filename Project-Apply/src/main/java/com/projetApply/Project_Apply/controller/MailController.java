@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.projetApply.Project_Apply.exception.MailSendingException;
 import com.projetApply.Project_Apply.model.User;
 import com.projetApply.Project_Apply.repository.UserRepository;
 import com.projetApply.Project_Apply.service.MailService;
@@ -85,10 +86,10 @@ public class MailController {
             model.addAttribute("message", "Mail envoyé avec succès !");
             log.info("Mail envoyé avec succès à : {}", email);
 
-        } catch (Exception e) {
-            model.addAttribute("message", "Échec de l'envoi du mail.");
+        } catch (MailSendingException e) {
             log.error("Échec de l'envoi du mail à : {}", email, e);
-
+            model.addAttribute("message", "Échec de l'envoi du mail.");
+            return "forget-password";
         }
 
         log.info("Lien envoyé" + resetLink);

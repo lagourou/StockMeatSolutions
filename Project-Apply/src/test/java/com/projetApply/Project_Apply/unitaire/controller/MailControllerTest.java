@@ -1,6 +1,7 @@
 package com.projetApply.Project_Apply.unitaire.controller;
 
 import com.projetApply.Project_Apply.controller.MailController;
+import com.projetApply.Project_Apply.exception.MailSendingException;
 import com.projetApply.Project_Apply.model.User;
 import com.projetApply.Project_Apply.repository.UserRepository;
 import com.projetApply.Project_Apply.service.MailService;
@@ -33,9 +34,11 @@ class MailControllerTest {
     @InjectMocks
     private MailController mailController;
 
+    @SuppressWarnings("unused")
     private AutoCloseable closeable;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
     }
@@ -95,7 +98,7 @@ class MailControllerTest {
         user.setUsername("TestUser");
 
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
-        doThrow(new RuntimeException("Erreur SMTP"))
+        doThrow(new MailSendingException("Impossible d'envoyer le mail", new RuntimeException("Erreur SMTP")))
                 .when(mailService)
                 .sendMail(anyString(), anyString(), anyString(), anyString());
 
@@ -143,6 +146,7 @@ class MailControllerTest {
 
     @Test
     void passwordEntry_shouldShowErrorIfPasswordsDoNotMatch() {
+        @SuppressWarnings("unused")
         String view = mailController.passwordEntry("token", "pass1", "pass2", model);
         verify(model).addAttribute("message", "Les mots de passe ne correspondent pas");
         verify(model).addAttribute("token", "token");

@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.AbstractView;
 
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -173,6 +175,14 @@ public class PaymentControllerTest {
                 .andExpect(model().attributeExists("message"));
 
         verify(paymentService).processPayment(any(), any(), any());
+    }
+
+    @Test
+    void testScannedProducts_returnsEmptyList() {
+        PaymentController controller = new PaymentController(userRepository, paymentService);
+        List<ProductDTO> result = controller.scannedProducts();
+        assertNotNull(result);
+        assertTrue(result.isEmpty(), "La liste retournée doit être vide");
     }
 
 }

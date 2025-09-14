@@ -26,6 +26,7 @@ class SecurityConfigTest {
     private MockMvc mockMvc;
 
     @MockitoBean
+    @SuppressWarnings("unused")
     private CustomUserDetailsService customUserDetailsService;
 
     @Test
