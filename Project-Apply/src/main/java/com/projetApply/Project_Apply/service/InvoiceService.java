@@ -3,7 +3,6 @@ package com.projetApply.Project_Apply.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
@@ -24,7 +23,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.projetApply.Project_Apply.model.Payment;
 import com.projetApply.Project_Apply.model.Product;
-import com.projetApply.Project_Apply.model.Scan;
 import com.projetApply.Project_Apply.repository.ScanRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -86,13 +84,14 @@ public class InvoiceService {
 
             Map<Product, Integer> productQuantity = new LinkedHashMap<>();
 
-            List<Scan> scans = scanRepository.findByPayment(payment);
-            for (Scan scan : scans) {
-                Product produit = scan.getProduct();
-                productQuantity.merge(produit, 1, Integer::sum);
+            List<Object[]> results = scanRepository.findProductQuantitiesByPayment(payment);
+            for (Object[] row : results) {
+                Product produit = (Product) row[0];
+                int quantity = ((Long) row[1]).intValue();
+                productQuantity.put(produit, quantity);
             }
 
-            PdfPTable table = new PdfPTable(4);
+            PdfPTable table = new PdfPTable(3);
             table.setWidthPercentage(100);
             table.setSpacingBefore(10f);
             table.setSpacingAfter(10f);
@@ -101,20 +100,16 @@ public class InvoiceService {
             table.addCell(new Paragraph("Produit", headerFont));
             table.addCell(new Paragraph("Quantité", headerFont));
             table.addCell(new Paragraph("Prix Unitaire", headerFont));
-            table.addCell(new Paragraph("Total", headerFont));
 
             for (Map.Entry<Product, Integer> entry : productQuantity.entrySet()) {
                 Product p = entry.getKey();
                 int quantity = entry.getValue();
 
                 String unitPrice = String.format("%.2f €", p.getPrice().doubleValue());
-                String total = String.format("%.2f €",
-                        p.getPrice().multiply(BigDecimal.valueOf(quantity)).doubleValue());
 
                 table.addCell(p.getName());
                 table.addCell(String.valueOf(quantity));
                 table.addCell(unitPrice);
-                table.addCell(total);
 
             }
 

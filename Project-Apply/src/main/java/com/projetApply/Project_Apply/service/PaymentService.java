@@ -2,7 +2,10 @@ package com.projetApply.Project_Apply.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,27 +41,36 @@ public class PaymentService {
             throw new IllegalArgumentException("Aucun produit à payer.");
         }
 
-        BigDecimal total = scannedProducts.stream()
-                .map(ProductDTO::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        log.info("Montant total du paiement : {} €", total);
+        Map<String, Long> qtyByBarcode = scannedProducts.stream()
+                .collect(Collectors.groupingBy(ProductDTO::getBarcode, Collectors.counting()));
+
+        Map<String, Product> productsMap = new HashMap<>();
+
+        BigDecimal total = BigDecimal.ZERO;
+        for (Map.Entry<String, Long> entry : qtyByBarcode.entrySet()) {
+            Product product = productRepository.findByBarcode(entry.getKey())
+                    .orElseThrow(() -> new ProductNotFoundException("Produit introuvable"));
+
+            productsMap.put(entry.getKey(), product);
+            total = total.add(product.getPrice().multiply(BigDecimal.valueOf(entry.getValue())));
+        }
 
         Payment payment = new Payment();
-        payment.setAmount(total);
         payment.setType(paymentType);
         payment.setPaymentDate(LocalDateTime.now());
         payment.setEmployee(employee);
+        payment.setAmount(total);
+        log.info("Montant total du paiement : {} €", total);
 
         Payment savedPayment = paymentRepository.save(payment);
         log.info("Paiement enregistré avec ID : {}", savedPayment.getId());
 
-        for (ProductDTO dto : scannedProducts) {
-            Product product = productRepository.findByBarcode(dto.getBarcode())
-                    .orElseThrow(() -> new ProductNotFoundException("Produit introuvable : " + dto.getName()));
-            if (product.getQuantity() <= 0) {
-                throw new IllegalStateException("Stock épuisé pour le produit : " + product.getName());
+        for (Map.Entry<String, Long> entry : qtyByBarcode.entrySet()) {
+            Product product = productsMap.get(entry.getKey());
+            if (product.getQuantity() < entry.getValue()) {
+                throw new IllegalStateException("Stock insuffisant pour : " + product.getName());
             }
-            product.setQuantity(product.getQuantity() - 1);
+            product.setQuantity(product.getQuantity() - entry.getValue().intValue());
             productRepository.save(product);
         }
 
