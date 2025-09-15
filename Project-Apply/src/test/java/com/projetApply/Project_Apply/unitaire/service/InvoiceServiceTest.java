@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,11 @@ class InvoiceServiceTest {
         scan.setProduct(product);
         scan.setPayment(payment);
 
-        when(scanRepository.findByPayment(payment)).thenReturn(List.of(scan, scan));
+        List<Object[]> mockResult = new ArrayList<>();
+        mockResult.add(new Object[] { product, 2L });
+
+        when(scanRepository.findProductQuantitiesByPayment(payment))
+                .thenReturn(mockResult);
 
         // Act
         byte[] pdfBytes = invoiceService.generateInvoicePDF(payment);
@@ -84,10 +89,10 @@ class InvoiceServiceTest {
             assertTrue(normalized.contains("Boeuf"));
             // Montants : on tolère plusieurs formats
             assertTrue(
-                    normalized.contains("20.00 €") ||
-                            normalized.contains("20.00€") ||
-                            normalized.contains("20.00 EUR") ||
-                            normalized.contains("20 €"));
+                    normalized.contains("10.00 €") ||
+                            normalized.contains("10.00€") ||
+                            normalized.contains("10.00 EUR") ||
+                            normalized.contains("10 €"));
             assertTrue(
                     normalized.contains("100 €") ||
                             normalized.contains("100€") ||
