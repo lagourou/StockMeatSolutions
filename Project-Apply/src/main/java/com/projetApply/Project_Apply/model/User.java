@@ -15,6 +15,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Représente un utilisateur de l’application.
+ * 
+ * Cette entité contient :
+ * - l’identifiant, l’email et le nom d’utilisateur,
+ * - le mot de passe (encodé),
+ * - un token de réinitialisation et sa date d’expiration,
+ * - la liste des scans effectués par cet utilisateur.
+ */
 @Entity
 @Table(name = "users")
 @Data

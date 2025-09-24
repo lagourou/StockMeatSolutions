@@ -25,6 +25,25 @@ import com.projetApply.Project_Apply.service.ScanService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Contrôleur pour gérer les scans de produits par les utilisateurs.
+ * 
+ * Il permet de :
+ * - afficher les scans d’un utilisateur via "/scans/user/{userId}",
+ * - afficher les scans d’un produit via "/scans/product/{barcode}",
+ * - afficher la page de scan via "/scans",
+ * - enregistrer un nouveau scan via "/scans/save",
+ * - réinitialiser les produits scannés via "/scans/reset".
+ * 
+ * Utilise :
+ * - ScanService pour enregistrer et récupérer les scans,
+ * - SessionAttributes pour garder les produits scannés en mémoire pendant la
+ * session,
+ * - SecurityContext pour identifier l’utilisateur connecté.
+ * 
+ * Affiche des messages selon le résultat du scan :
+ * - succès, rupture de stock, produit introuvable ou erreur technique.
+ */
 @Controller
 @RequiredArgsConstructor
 @SessionAttributes("scannedProducts")

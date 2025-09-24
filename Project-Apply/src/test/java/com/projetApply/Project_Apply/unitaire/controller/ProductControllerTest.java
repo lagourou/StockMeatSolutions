@@ -92,13 +92,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    void testShowForm() throws Exception {
-        mockMvc.perform(get("/products/form"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("products/form"));
-    }
-
-    @Test
     void testAddOrUpdateProduct() throws Exception {
         ProductDTO dto = new ProductDTO();
         dto.setId(5);

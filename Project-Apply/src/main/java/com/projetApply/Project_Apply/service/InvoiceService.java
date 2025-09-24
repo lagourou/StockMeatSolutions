@@ -27,12 +27,42 @@ import com.projetApply.Project_Apply.repository.ScanRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Service qui génère une facture PDF après un paiement.
+ * 
+ * Cette classe permet de :
+ * - créer un document PDF avec les informations du paiement,
+ * - afficher le logo, le nom de l’employé, la date et le mode de paiement,
+ * - lister les produits achetés avec leur quantité et leur prix,
+ * - calculer le montant total,
+ * - retourner le fichier PDF sous forme de tableau de bytes.
+ * 
+ * Elle utilise :
+ * - ScanRepository pour récupérer les produits liés au paiement,
+ * - iText pour construire le PDF,
+ * - les ressources du projet pour insérer le logo.
+ */
 @Service
 @RequiredArgsConstructor
 public class InvoiceService {
 
     private final ScanRepository scanRepository;
 
+    /**
+     * Génère une facture PDF à partir d’un paiement.
+     * 
+     * Étapes :
+     * - crée le document PDF,
+     * - insère le logo et les infos du paiement,
+     * - récupère les produits scannés liés au paiement,
+     * - affiche les produits dans un tableau (nom, quantité, prix),
+     * - ajoute le montant total,
+     * - retourne le PDF sous forme de tableau de bytes.
+     * 
+     * @param payment le paiement effectué
+     * @return le fichier PDF généré (tableau de bytes)
+     * @throws RuntimeException si une erreur survient pendant la création du PDF
+     */
     public byte[] generateInvoicePDF(Payment payment) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 

@@ -6,7 +6,17 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Représente les données d’un utilisateur à créer ou modifier.
+ * 
+ * Ce DTO contient :
+ * - l’identifiant de l’utilisateur,
+ * - le nom d’utilisateur (entre 8 et 20 caractères),
+ * - l’email (doit être valide),
+ * - le mot de passe (entre 6 et 32 caractères).
+ * 
+ * Utilisé pour les formulaires d’inscription, de modification ou d’authentification.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

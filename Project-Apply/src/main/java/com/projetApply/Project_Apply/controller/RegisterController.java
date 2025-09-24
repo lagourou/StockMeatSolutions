@@ -16,6 +16,20 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Contrôleur pour gérer l’inscription des nouveaux utilisateurs.
+ * 
+ * Il permet de :
+ * - afficher le formulaire d’inscription via "/register",
+ * - valider les données saisies et enregistrer l’utilisateur,
+ * - vérifier que l’email n’est pas déjà utilisé,
+ * - encoder le mot de passe avant de le sauvegarder.
+ * 
+ * Utilise :
+ * - UserRepository pour enregistrer l’utilisateur,
+ * - PasswordEncoder pour sécuriser le mot de passe,
+ * - les annotations Spring pour valider le formulaire.
+ */
 @Controller
 @RequiredArgsConstructor
 @Slf4j

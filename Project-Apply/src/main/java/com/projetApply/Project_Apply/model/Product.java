@@ -12,6 +12,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+/**
+ * Représente un produit dans le stock.
+ * 
+ * Cette entité contient :
+ * - le nom, le code-barres, le poids et le prix du produit,
+ * - la quantité disponible en stock,
+ * - le statut du stock (ex : "Stock faible", "Rupture de stock"),
+ * - la catégorie (ex : "Viande rouge", "Volaille"),
+ * - la liste des scans associés à ce produit.
+ */
 @Entity
 @Table(name = "Product")
 @Data

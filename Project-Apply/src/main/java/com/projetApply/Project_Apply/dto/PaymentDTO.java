@@ -12,6 +12,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Représente les données d’un paiement à afficher ou transférer.
+ * 
+ * Ce DTO contient :
+ * - l’identifiant du paiement,
+ * - le montant payé,
+ * - le type de paiement (carte ou espèces),
+ * - la date du paiement,
+ * - le statut du paiement (ex : validé, en attente),
+ * - l’identifiant de l’employé qui a validé le paiement.
+ * 
+ * Utilisé pour envoyer ou recevoir les infos de paiement sans exposer l’entité
+ * complète.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

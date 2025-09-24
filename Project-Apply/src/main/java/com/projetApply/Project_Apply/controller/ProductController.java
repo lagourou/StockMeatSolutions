@@ -21,6 +21,20 @@ import com.projetApply.Project_Apply.service.ScanService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Contrôleur pour gérer les produits dans l’application.
+ * 
+ * Il permet de :
+ * - ajouter ou mettre à jour un produit via "/products/add",
+ * - afficher la liste des produits et le stock total via "/products",
+ * - supprimer un produit via "/products/remove",
+ * - rafraîchir les statuts des produits via "/products/refresh-status".
+ * 
+ * Utilise :
+ * - ProductService pour gérer les opérations sur les produits,
+ * - ScanService pour récupérer les scans liés à l’utilisateur,
+ * - UserRepository pour identifier l’utilisateur connecté.
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/products")
@@ -29,11 +43,6 @@ public class ProductController {
     private final ProductService productService;
     private final ScanService scanService;
     private final UserRepository userRepository;
-
-    @GetMapping("/form")
-    public String showForm() {
-        return "products/form";
-    }
 
     @PostMapping("/add")
     public String addOrUpdateProduct(

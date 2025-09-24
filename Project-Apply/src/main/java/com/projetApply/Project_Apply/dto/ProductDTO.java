@@ -10,6 +10,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Représente les données d’un produit à afficher ou transférer.
+ * 
+ * Ce DTO contient :
+ * - le nom, le code-barres, le poids et le prix du produit,
+ * - la quantité en stock,
+ * - le statut du stock (ex : "Stock faible"),
+ * - la catégorie du produit (ex : "Viande rouge").
+ * 
+ * Utilisé pour afficher les produits ou les envoyer dans des formulaires.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

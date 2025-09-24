@@ -24,6 +24,22 @@ import com.projetApply.Project_Apply.repository.ScanRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Service qui gère le processus de paiement d’un utilisateur.
+ * 
+ * Cette classe permet de :
+ * - calculer le montant total à payer selon les produits scannés,
+ * - vérifier le stock disponible pour chaque produit,
+ * - enregistrer le paiement en base,
+ * - associer les scans au paiement,
+ * - générer une facture PDF,
+ * - envoyer la facture par mail à l’utilisateur.
+ * 
+ * Elle utilise :
+ * - les repositories pour accéder aux produits, paiements et scans,
+ * - InvoiceService pour créer la facture,
+ * - MailService pour envoyer le mail avec la facture.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -35,6 +51,28 @@ public class PaymentService {
     private final InvoiceService invoiceService;
     private final MailService mailService;
 
+    /**
+     * Traite le paiement d’un utilisateur pour une liste de produits scannés.
+     * 
+     * Étapes :
+     * - vérifie que la liste n’est pas vide,
+     * - regroupe les produits par code-barres et compte les quantités,
+     * - calcule le montant total,
+     * - vérifie le stock disponible,
+     * - enregistre le paiement,
+     * - met à jour les quantités en stock,
+     * - associe les scans au paiement,
+     * - génère une facture PDF,
+     * - envoie la facture par mail.
+     * 
+     * @param employee        utilisateur qui effectue le paiement
+     * @param paymentType     type de paiement (ex : carte, espèces…)
+     * @param scannedProducts liste des produits scannés
+     * @return la facture en format PDF (tableau de bytes)
+     * @throws IllegalArgumentException si la liste de produits est vide
+     * @throws ProductNotFoundException si un produit n’est pas trouvé
+     * @throws IllegalStateException    si le stock est insuffisant
+     */
     @Transactional
     public byte[] processPayment(User employee, PaymentType paymentType, List<ProductDTO> scannedProducts) {
         if (scannedProducts == null || scannedProducts.isEmpty()) {

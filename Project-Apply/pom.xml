@@ -243,7 +243,23 @@
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>javadoc</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<show>private</show>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

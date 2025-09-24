@@ -5,6 +5,15 @@ import java.sql.Timestamp;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * Représente un scan effectué par un utilisateur sur un produit.
+ * 
+ * Cette entité contient :
+ * - l’utilisateur qui a scanné,
+ * - le produit concerné,
+ * - la date du scan,
+ * - le paiement associé (si le produit a été acheté).
+ */
 @Entity
 @Table(name = "scan")
 @Data

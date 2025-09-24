@@ -13,6 +13,18 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Service qui gère l’envoi de mails, avec ou sans pièce jointe.
+ * 
+ * Cette classe permet de :
+ * - envoyer un mail simple (texte, sujet, destinataire),
+ * - envoyer un mail avec un fichier attaché (ex : facture PDF),
+ * - gérer les erreurs d’envoi et les afficher dans les logs.
+ * 
+ * Elle utilise :
+ * - JavaMailSender pour envoyer les mails,
+ * - MimeMessageHelper pour configurer le contenu du message.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -20,6 +32,15 @@ public class MailServiceImplements implements MailService {
 
     private final JavaMailSender mailSender;
 
+    /**
+     * Envoie un mail simple à un destinataire.
+     * 
+     * @param to      adresse du destinataire
+     * @param from    adresse de l’expéditeur
+     * @param subject sujet du mail
+     * @param body    contenu du mail (texte HTML ou brut)
+     * @throws MailSendingException si l’envoi échoue
+     */
     @Override
     public void sendMail(String to, String from, String subject, String body) {
         log.info("Préparation du mail : to={}, from={}, subject={}", to, from, subject);
@@ -46,6 +67,18 @@ public class MailServiceImplements implements MailService {
         }
     }
 
+    /**
+     * Envoie un mail avec une pièce jointe (ex : PDF).
+     * 
+     * @param to         adresse du destinataire
+     * @param from       adresse de l’expéditeur
+     * @param subject    sujet du mail
+     * @param body       contenu du mail
+     * @param attachment contenu du fichier à joindre (sous forme de tableau de
+     *                   bytes)
+     * @param filename   nom du fichier joint
+     * @throws RuntimeException si l’envoi échoue
+     */
     @Override
     public void sendMailWithAttachment(String to, String from, String subject, String body, byte[] attachment,
             String filename) {

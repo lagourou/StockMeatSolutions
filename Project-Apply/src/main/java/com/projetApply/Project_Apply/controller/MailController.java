@@ -19,6 +19,23 @@ import com.projetApply.Project_Apply.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Contrôleur pour gérer la réinitialisation du mot de passe par email.
+ * 
+ * Il permet de :
+ * - afficher le formulaire de demande de réinitialisation via
+ * "/forget-password",
+ * - envoyer un mail avec un lien de réinitialisation,
+ * - afficher le formulaire de nouveau mot de passe via "/reset-password",
+ * - enregistrer le nouveau mot de passe après validation.
+ * 
+ * Utilise :
+ * - MailService pour envoyer le mail,
+ * - UserRepository pour retrouver et mettre à jour l’utilisateur,
+ * - PasswordEncoder pour sécuriser le nouveau mot de passe.
+ * 
+ * Le lien de réinitialisation est valide pendant 24 heures.
+ */
 @Controller
 @RequiredArgsConstructor
 @Slf4j

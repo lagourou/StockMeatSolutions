@@ -25,6 +25,21 @@ import com.projetApply.Project_Apply.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Contrôleur pour gérer le paiement des produits scannés.
+ * 
+ * Il permet de :
+ * - afficher la page de paiement avec les produits scannés,
+ * - calculer le montant total à payer,
+ * - confirmer le paiement et générer la facture,
+ * - vider la session après paiement.
+ * 
+ * Utilise :
+ * - PaymentService pour traiter le paiement et envoyer la facture,
+ * - UserRepository pour retrouver l’employé connecté,
+ * - SessionAttributes pour garder les produits scannés en mémoire pendant la
+ * session.
+ */
 @Controller
 @RequestMapping("payment")
 @RequiredArgsConstructor

@@ -18,6 +18,19 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Contrôleur pour afficher et modifier le profil de l’utilisateur connecté.
+ * 
+ * Il permet de :
+ * - afficher les infos du profil via "/profil",
+ * - modifier les infos du profil via "/modify-profil".
+ * 
+ * Utilise :
+ * - UserService pour récupérer et mettre à jour les données,
+ * - UserMapper pour convertir entre entité et DTO,
+ * - les annotations Spring pour valider les données et gérer l’utilisateur
+ * connecté.
+ */
 @Controller
 @RequiredArgsConstructor
 @Slf4j

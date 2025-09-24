@@ -15,6 +15,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+/**
+ * Représente un paiement effectué par un employé.
+ * 
+ * Cette entité contient :
+ * - le montant payé,
+ * - le type de paiement (carte, espèces…),
+ * - la date du paiement,
+ * - l’employé qui a validé la transaction.
+ */
 @Entity
 @Table(name = "Payment")
 @Data
