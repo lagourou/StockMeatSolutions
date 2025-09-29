@@ -1,86 +1,203 @@
-````markdown
-AGOUROU Laurent
+# StockMeat Solutions
 
-# Mon Application Spring Boot
-
-Cette application est développée en **Java avec Spring Boot**.  
-Elle propose un système d’authentification sécurisé avec gestion des utilisateurs, formulaires Thymeleaf, et base de données relationnelle.
-afin de développer une application web de gestion des viandes non acheté pour les revendre aux employés de l'entreprise
+Application web sécurisée de gestion des stocks de viande non achetée, destinée à la revente aux employés de l’entreprise.
+Développée en **Java avec Spring Boot**, elle combine une interface intuitive, une sécurité renforcée, et une architecture modulaire adaptée aux environnements professionnels.
 
 ---
 
-## ⚙️ Installation
+## Objectifs
+
+- Optimiser la gestion des invendus carnés en entreprise
+- Faciliter la revente aux salariés via une interface web sécurisée
+- Garantir la traçabilité des produits et la conformité réglementaire
+- Offrir une solution déployable en local ou en cloud, avec configuration adaptable
+
+---
+
+## Architecture
+
+Le projet suit une architecture MVC organisée en plusieurs couches :
+
+- Model → Entités métiers : Product, User, Payment, Scan
+
+- Repository → Interfaces JPA pour l’accès à la base de données
+
+- Service → Logique métier (gestion produits, paiements, factures…)
+
+- Controller → Envoie les données à la vue aux pages HTML (formulaires HTML avec Thymeleaf)
+
+- DTO & Mapper → Communication sécurisée entre couches
+
+- Exception → Gestion des erreurs personnalisées
+
+- Configuration → Sécurité, beans
+
+![Architecture MVC](Architecture-MVC.jpg)
+
+## Base de données
+
+- Langage utilsé : MySQL
+- Modélisation : Diagramme de classe (UML)
+- Principales entités :
+
+User : gestion des employés et rôles (admin, user)
+
+Product : informations sur les viandes (type, poids, prix, code-barres EAN-13)
+
+Payment : suivi des paiements (montant, date, mode)
+
+Scan : enregistrement du code-barres scanné (via scanner)
+
+## Diagrammes
+
+• **Diagramme UML** montre les relations entre les différentes tables et leurs éléments.
+![Diagramme UML](Diagramme_de_classe.png)
+
+• **Diagramme MPD** montre comment les données de l'application sont structurées et liées.
+![Diagramme MPD](Diagramme_mpd.png)
+
+## Fonctionnalités
+
+- Authentification sécurisée (Spring Security + BCrypt)
+
+- Gestion des utilisateurs (inscription, connexion, déconnexion)
+
+- Réinitialisation du mot de passe par e-mail (via Brevo)
+
+- Gestion des produits (CRUD)
+
+- Tableau de bord administrateur
+
+- Filtrage et recherche des produits
+
+- Réservation des produits par les employés
+
+- Suivi des stocks et des ventes
+
+## Technologies utilisées
+
+- Backend : Java, Spring Boot
+
+- Sécurité : Spring Security (authentification)
+
+- Base de données : MySQL + JPA/Hibernate
+
+- Frontend : Thymeleaf, HTML, CSS, JavaScript
+
+- Tests : JUnit 5, Mockito, MockMvc (unitaires & intégration)
+
+- Documentation : JavaDoc, JaCoCo, Surefire (rapports HTML)
+
+- CI/CD : GitHub Actions
+
+- Conteneurisation : Docker & Docker Compose
+
+- Déploiement : VPS (clé SSH + nom de domaine via LWS)
+
+- Mails : Brevo (réinitialisation mot de passe & envoi facture PDF)
+
+- PDF : OpenPDF (com.github.librepdf:openpdf)
+
+- Scanner code-barres : Datalogic Touch TD1100
+
+## Sécurité
+
+- Authentification via Spring Security
+
+- Mots de passe encodés avec BCrypt
+
+- Connexion sécurisée en HTTPS
+
+- Réinitialisation du mot de passe via Brevo
+
+- Protection des routes sensibles : accès après authentification
+
+## Installation
 
 ### 1. Prérequis
 
-Avant de commencer, assurez-vous d’avoir installé :
+Assurez-vous d’avoir installé :
 
-- [Java 23](https://www.oracle.com/java/technologies/javase/jdk23-archive-downloads.html) ou version compatible
+- [Java 17](https://www.oracle.com/java/technologies/javase/jdk23-archive-downloads.html)
 - [Maven](https://maven.apache.org/)
 - [Git](https://git-scm.com/)
-- Une base de données **MySQL** ou **PostgreSQL** (selon votre configuration)
+- Une base de données **MySQL** ou **PostgreSQL**
+- [Docker](https://www.docker.com/) (optionnel mais recommandé pour les environnements isolés)
 
 ### 2. Cloner le projet
 
 ```bash
-git clone https://github.com/ton-compte/ton-projet.git
-cd ton-projet
+git clone https://github.com/ton-compte/stockmeat-solutions.git
+cd stockmeat-solutions
+
 ```
-````
 
-### 3. Configurer la base de données
+### 3. Configuration
 
-- Créez une base de données (exemple : `app_db`)
-- Ouvrez le fichier `application.properties` (ou `application.yml`) et configurez vos informations :
+**application.properties**
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/app_db
+- Créez une base de données
+- Ouvrez le fichier `application.properties` et configurez vos informations :
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/stockmeat_db
 spring.datasource.username=mon_user
 spring.datasource.password=mon_password
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-### 4. Lancer l’application
+**Profils Spring**
+
+L’application utilise des profils de configuration (dev, prod, test) pour adapter le comportement selon l’environnement :
+
+````
+spring.profiles.active=dev
+```
+
+**Docker**
+Un fichier docker-compose.yml est fourni pour lancer l’application et la base de données en containers :
+
+````
+
+docker-compose up --build
+
+````
+
+**Lancer l’application**
 
 Avec Maven :
 
 ```bash
 mvn spring-boot:run
-```
+````
 
-Ou en lançant directement le fichier **main** depuis votre IDE (VS Code, IntelliJ, Eclipse).
+Ou directement depuis VS Code
 
----
+## Tests
 
-## Utilisation
+- Outils utilisé : **JUnit 5**, **Mockito** et **Mock MVC**
 
-Une fois l’application lancée, ouvrez un navigateur et accédez à :
+### Tests unitaires
 
-👉 [http://localhost:8080](http://localhost:8080)
+- Couvrent les services, contrôleurs et entités critiques
 
-Fonctionnalités disponibles :
+- Exemple : ProductServiceTest, UserControllerTest
 
-- Page d’accueil
-- Inscription d’un utilisateur
-- Connexion et déconnexion
-- Réinitialisation du mot de passe par e-mail
-- Navigation sécurisée entre les pages
+### Tests d'intégration
 
----
+- Vérifie l'ensemble du code avec la Base de données
 
-## Sécurité
+- Exemple : ProductRepositoryIT
 
-- Authentification avec **Spring Security**
-- Mots de passe encodés avec **BCrypt**
-- Connexion sécurisée en **HTTPS**
-- Réinitialisation du mot de passe via **Brevo** (ancien Sendinblue)
+### Couverture
 
----
+- JaCoCo : Rapport de couverture des tests
+- Surefire : Rapport de performance des tests
 
-## Auteur
+Consulter les rapports qui sont dans **target/site/jacoco/** et **target/site/**
 
-Projet développé dans le cadre du **Titre professionnel Concepteur Développeur d’Applications (CDA)**.
+Lancer les tests avec :
 
-```
-
+```bash
+mvn verify
 ```
