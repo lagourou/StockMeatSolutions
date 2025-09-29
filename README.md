@@ -129,7 +129,6 @@ Assurez-vous d’avoir installé :
 ```bash
 git clone https://github.com/ton-compte/stockmeat-solutions.git
 cd stockmeat-solutions
-
 ```
 
 ### 3. Configuration
@@ -150,18 +149,16 @@ spring.jpa.hibernate.ddl-auto=update
 
 L’application utilise des profils de configuration (dev, prod, test) pour adapter le comportement selon l’environnement :
 
-````
+```
 spring.profiles.active=dev
 ```
 
 **Docker**
 Un fichier docker-compose.yml est fourni pour lancer l’application et la base de données en containers :
 
-````
-
+```bash
 docker-compose up --build
-
-````
+```
 
 **Lancer l’application**
 
@@ -169,9 +166,25 @@ Avec Maven :
 
 ```bash
 mvn spring-boot:run
-````
+```
 
 Ou directement depuis VS Code
+
+## Déploiement
+
+1. CI/CD avec GitHub Actions
+
+- Build, tests, génération des rapports, création des images Docker.
+
+2. Conteneurisation avec Docker
+
+- Dockerfile et docker-compose.yml pour lancer l’app et MySQL.
+
+3. Déploiement sur VPS (LWS : hébergeur français)
+
+- Connexion via clé SSH.
+
+- Domaine personnalisé configuré.
 
 ## Tests
 
@@ -201,3 +214,10 @@ Lancer les tests avec :
 ```bash
 mvn verify
 ```
+
+## Auteur
+
+Laurent Agourou
+Contact : [agourou84@gmail.com]
+Projet afin de préparer un titre professionnel : CDA – Concepteur Développeur d’Applications
+Inspiré d’une expérience terrain dans l’industrie de la viande
