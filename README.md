@@ -32,7 +32,7 @@ Le projet suit une architecture MVC organisée en plusieurs couches :
 
 - Configuration → Sécurité, beans
 
-![Architecture MVC](Architecture-MVC.jpg)
+![Architecture MVC](images/Architecture-MVC.jpg)
 
 ## Base de données
 
@@ -51,10 +51,10 @@ Scan : enregistrement du code-barres scanné (via scanner)
 ## Diagrammes
 
 • **Diagramme UML** montre les relations entre les différentes tables et leurs éléments.
-![Diagramme UML](Diagramme_de_classe.png)
+![Diagramme UML](images/Diagramme_de_classe.png)
 
 • **Diagramme MPD** montre comment les données de l'application sont structurées et liées.
-![Diagramme MPD](Diagramme_mpd.png)
+![Diagramme MPD](images/Diagramme_mpd.png)
 
 ## Fonctionnalités
 
@@ -118,11 +118,11 @@ Scan : enregistrement du code-barres scanné (via scanner)
 
 Assurez-vous d’avoir installé :
 
-- [Java 17](https://www.oracle.com/java/technologies/javase/jdk23-archive-downloads.html)
-- [Maven](https://maven.apache.org/)
-- [Git](https://git-scm.com/)
-- Une base de données **MySQL** ou **PostgreSQL**
-- [Docker](https://www.docker.com/) (optionnel mais recommandé pour les environnements isolés)
+- Java 17
+- Maven
+- Git
+- Une base de données **MySQL**
+- Docker
 
 ### 2. Cloner le projet
 
