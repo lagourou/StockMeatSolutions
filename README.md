@@ -217,7 +217,7 @@ mvn verify
 
 ## Auteur
 
-Laurent Agourou
-Contact : [agourou84@gmail.com]
-Projet afin de préparer un titre professionnel : CDA – Concepteur Développeur d’Applications
-Inspiré d’une expérience terrain dans l’industrie de la viande
+- Laurent Agourou
+- Contact : [agourou84@gmail.com]
+- Projet réalisé dans le but d'obtenir un titre professionnel en tant que: Concepteur Développeur d’Applications – CDA
+- Inspiré d’une expérience terrain dans l’industrie de la viande
