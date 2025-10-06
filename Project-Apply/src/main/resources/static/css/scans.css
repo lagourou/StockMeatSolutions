@@ -171,11 +171,11 @@ body {
   background-color: #b81212;
   color: white;
   border: none;
-  padding: 10px 160px;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 16px;
 }
 
 .btn-scan:hover {
