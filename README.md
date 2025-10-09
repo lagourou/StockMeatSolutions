@@ -5,7 +5,7 @@ Développée en **Java avec Spring Boot**, elle combine une interface intuitive,
 
 ---
 
-## Objectifs de l'application
+## Objectifs
 
 - Optimiser la gestion des invendus carnés en entreprise
 - Faciliter la revente aux salariés via une interface web sécurisée
