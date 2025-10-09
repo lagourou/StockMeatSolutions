@@ -7,6 +7,8 @@ target/
 !target/site/jacoco/
 !target/site/jacoco/index.html
 !target/site/surefire-report.html
+!target/site/apidocs/
+!target/site/apidocs/index.html
 
 .mvn/wrapper/maven-wrapper.jar
 pom.xml.tag
