@@ -186,6 +186,27 @@ Ou directement depuis VS Code
 
 - Domaine personnalisé configuré.
 
+## Maquettes fonctionnelles
+
+Voici les maquettes fonctionnelles afin de montrer les champs, les boutons et le parcours utilisateur, une structure commune (menu latéral + en tête) est présent sur toutes les pages WEB :
+
+• La page **Profil** permet à l’utilisateur de consulter ses informations personnelles et de les modifier.
+Le champ de saisie est stylisé sans bordure pour des raisons esthétiques, mais reste fonctionnel.
+
+![Page Profil](images/Page_profil.png)
+
+• La page **Produit** affiche le stock actuel sous forme de tableau. Chaque ligne représente un produit avec ses caractéristiques : nom, catégorie, poids, prix, quantité disponible et statut du stock. Les indicateurs globaux (stock total et nombre de produits scannés) sont affichés en haut de page
+
+![Page Produit](images/Page_produit.png)
+
+• La page **Scanner** permet à l’utilisateur de saisir ou scanner un code-barres pour ajouter un produit au panier temporaire. Le bouton ‘Scanner / Entrée’ déclenche l’ajout, tandis que le bouton ‘Reset’ vide la zone d’affichage. Les articles scannés apparaissent dans une zone dynamique à droite.
+
+![Page Scanner](images/Page_scanner.png)
+
+• La page **Paiement** permet à l’utilisateur de visualiser le récapitulatif des produits scannés qui sont à payez, le montant total à régler, et de choisir un mode de paiement (carte ou espèces). Un bouton permet de valider la commande et de recevoir la facture par mail.
+
+![Page Scanner](images/Page_paiement.png)
+
 ## Tests
 
 - Outils utilisé : **JUnit 5**, **Mockito** et **Mock MVC**
