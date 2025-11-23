@@ -51,9 +51,6 @@
               required
             />
           </div>
-          <div th:if="${error}" class="alert-danger">
-            <p th:text="${error}"></p>
-          </div>
 
           <input
             id="email"
@@ -66,6 +63,15 @@
             th:value="${''}"
             required
           />
+
+          <div th:if="${#fields.hasErrors('password')}" class="alert-danger">
+            <p
+              th:each="err : ${#fields.errors('password')}"
+              th:text="${err}"
+              class="error-message"
+            ></p>
+          </div>
+
           <input
             id="password"
             type="password"
@@ -80,9 +86,14 @@
             <strong>S'inscrire</strong>
           </button>
         </form>
+
         <div th:if="${success}" class="alert-success">
           <p th:text="${success}"></p>
         </div>
+        <div th:if="${error}" class="alert-danger">
+          <p th:text="${error}"></p>
+        </div>
+
         <footer class="form-footer">
           <a href="/login" class="link">Déjà inscrit ? Connectez-vous</a>
         </footer>

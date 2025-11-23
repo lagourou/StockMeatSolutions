@@ -13,7 +13,6 @@ body {
   justify-content: center;
   height: 100vh;
 }
-
 .header {
   margin-bottom: 20px;
   display: flex;
@@ -173,7 +172,23 @@ body {
 }
 .alert-danger p {
   font-style: italic;
+  margin: 0;
 }
 .register-form {
   position: relative;
+}
+.alert-success p {
+  font-style: italic;
+  color: green;
+  font-size: 15px;
+}
+.alert-email p {
+  font-style: italic;
+  color: red;
+  font-size: 15px;
+  margin-top: 10px;
+}
+.alert-email {
+  position: absolute;
+  margin-top: 230px;
 }
