@@ -1,6 +1,6 @@
 # StockMeat Solutions
 
-Application web sécurisée de gestion des stocks de viande non achetée, destinée à la revente aux employés de l’entreprise.
+Application web sécurisée de gestion des stocks de viande non achetée, destinée à la revente aux employés de l’entreprise où j'ai travaillé en tant qu'intérimaire en 2024.
 Développée en **Java avec Spring Boot**, elle combine une interface intuitive, une sécurité renforcée, et une architecture modulaire adaptée aux environnements professionnels.
 
 ---
