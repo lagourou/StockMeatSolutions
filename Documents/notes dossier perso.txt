@@ -1,0 +1,3 @@
+Note pour le dossier perso :  Penser à mettre les outils et langage utilisé avant le kanban et parler du front apres vps et ssh
+
+pour la présentation prendre en compte la démo de l'application

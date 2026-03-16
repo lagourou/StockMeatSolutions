@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  * - UserRepository pour retrouver et mettre à jour l’utilisateur,
  * - PasswordEncoder pour sécuriser le nouveau mot de passe.
  * 
- * Le lien de réinitialisation est valide pendant 24 heures.
+ * Le lien de réinitialisation est valide pendant 1 heure.
  */
 @Controller
 @RequiredArgsConstructor
@@ -73,7 +73,7 @@ public class MailController {
         }
 
         String token = UUID.randomUUID().toString();
-        LocalDateTime expiration = LocalDateTime.now().plusHours(24);
+        LocalDateTime expiration = LocalDateTime.now().plusHours(1);
 
         user.setResetToken(token);
         user.setTokenExpiration(expiration);
@@ -88,14 +88,9 @@ public class MailController {
                 + "<p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous :</p>"
                 + "<p><a href='" + resetLink
                 + "' style='background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;'>Réinitialiser le mot de passe</a></p>"
-                + "<p style='font-size: 12px; color: #888;'>Ce lien est valable pendant 24 heures.</p>"
+                + "<p style='font-size: 12px; color: #888;'>Ce lien est valable pendant 1 heure.</p>"
                 + "<hr><p style='font-size: 12px;'>StockMeat Solutions • Ne pas répondre à ce mail</p>"
                 + "</div>";
-
-        log.info("Préparation de l'envoi du mail à : {}", email);
-        log.info("Expéditeur : noreply@stockmeatsolutions.site");
-        log.info("Sujet : {}", subject);
-        log.info("Contenu HTML : {}", body);
 
         try {
             log.info("Appel imminent de mailService.sendMail(...)");
